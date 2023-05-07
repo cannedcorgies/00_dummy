@@ -18,15 +18,19 @@ class Rocket extends Phaser.Physics.Arcade.Sprite {
             this.parentScene.add.existing(this);            // first add to scene
             this.parentScene.physics.add.existing(this);    // then add to PHYSICS scene
 
+            this.setActive(true);
+
             this.setCollideWorldBounds(true);               // cannot pass world limits
-            this.setBounce(0.5);                            // bounce on collision
-            this.setMaxVelocity(300, 450);                  // x, y
-            this.setDragX(600);                             // rate for slow-down
+            this.setBounceX(0.5);                            // bounce on collision
+            this.setMaxVelocity(300, 1000);                  // x, y
+            this.setDragX(600);                             // rate for slow-down x
             //this.setImmovable();                          // eliminate agency
             
         // default variables
 
             this.velocity = 50;     // own custom rate
+            this.jumpPower = 250;
+            this.jumped = false;
 
         // misc
 
@@ -48,6 +52,18 @@ class Rocket extends Phaser.Physics.Arcade.Sprite {
 
         }
 
+        if (Phaser.Input.Keyboard.JustDown(keyF)) {               //  Allow the player to jump if they are touching the ground.        
+                
+            this.jump(this.jumpPower);      
+
+        }
+
+    }
+
+    jump(power)
+    {
+        console.log("jumping!!");
+        this.body.velocity.y -= power;
     }
 
 }
